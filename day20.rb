@@ -1,6 +1,4 @@
-require "prime"
-
-TARGET = 29000000
+TARGET = 29_000_000
 MAX    = TARGET / 10
 
 # part 1
