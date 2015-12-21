@@ -39,19 +39,16 @@ max_gold = 0
 
 WEAPONS.each do |weapon|
   ARMORS.each do |armor|
-    RINGS.each do |ring_1|
-      RINGS.each do |ring_2|
-        next if ring_1 == ring_2 && ring_1[:cost] > 0 && ring_2[:cost] > 0
-        hero_damage = weapon[:damage] + ring_1[:damage] + ring_2[:damage]
-        hero_armor = armor[:armor] + ring_1[:armor] + ring_2[:armor]
-        hero_damages_dealt = [1, hero_damage - BOSS_ARMOR].max
-        boss_damages_dealt = [1, BOSS_DAMAGE - hero_armor].max
-        gold_spent = weapon[:cost] + armor[:cost] + ring_1[:cost] + ring_2[:cost]
-        if (BOSS_HIT_POINTS / hero_damages_dealt).ceil <= (HERO_HIT_POINTS / boss_damages_dealt).ceil
-          min_gold = gold_spent if gold_spent < min_gold
-        else
-          max_gold = gold_spent if gold_spent > max_gold
-        end
+    RINGS.combination(2).each do |ring_1, ring_2|
+      hero_damage = weapon[:damage] + ring_1[:damage] + ring_2[:damage]
+      hero_armor = armor[:armor] + ring_1[:armor] + ring_2[:armor]
+      hero_damages_dealt = [1, hero_damage - BOSS_ARMOR].max
+      boss_damages_dealt = [1, BOSS_DAMAGE - hero_armor].max
+      gold_spent = weapon[:cost] + armor[:cost] + ring_1[:cost] + ring_2[:cost]
+      if (BOSS_HIT_POINTS / hero_damages_dealt).ceil <= (HERO_HIT_POINTS / boss_damages_dealt).ceil
+        min_gold = gold_spent if gold_spent < min_gold
+      else
+        max_gold = gold_spent if gold_spent > max_gold
       end
     end
   end
