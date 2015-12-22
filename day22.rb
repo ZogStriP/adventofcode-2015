@@ -31,7 +31,10 @@ until nodes.empty? do
   n[:hero_armor] = 0
 
   # PART 2: hard mode
-  n[:hero_hp] -= 1 if n[:is_hero_turn]
+  if n[:is_hero_turn]
+    n[:hero_hp] -= 1
+    next if n[:hero_hp] <= 0
+  end
 
   # apply spell effects
   0.upto(4) do |s|
