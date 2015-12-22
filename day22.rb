@@ -24,14 +24,17 @@ nodes = [
   }
 ]
 
-until nodes.empty? do
+hard_mode = false
+lowest_mana_spent = Float::INFINITY
+
+until nodes.empty?
   n = nodes.shift
 
   # reset armor
   n[:hero_armor] = 0
 
-  # PART 2: hard mode
-  if n[:is_hero_turn]
+  # hard mode
+  if hard_mode && n[:is_hero_turn]
     n[:hero_hp] -= 1
     next if n[:hero_hp] <= 0
   end
@@ -50,12 +53,19 @@ until nodes.empty? do
     end
   end
 
-  next  if n[:hero_hp] <= 0
-  break if n[:boss_hp] <= 0 # \o/
+  # hero died
+  next if n[:hero_hp] <= 0
+
+  # boss died \o/
+  if n[:boss_hp] <= 0
+    lowest_mana_spent = n[:mana_spent] if n[:mana_spent] < lowest_mana_spent
+    next
+  end
 
   if n[:is_hero_turn]
+    next if hard_mode && n[:hero_hp] <= 1
     0.upto(4) do |s|
-      if n[:spell_timers][s] == 0 && n[:hero_mana] >= SPELL_COSTS[s]
+      if n[:spell_timers][s] == 0 && n[:hero_mana] >= SPELL_COSTS[s] && n[:mana_spent] + SPELL_COSTS[s] < lowest_mana_spent
         node = deep_dup(n)
         node[:hero_mana] -= SPELL_COSTS[s]
         node[:mana_spent] += SPELL_COSTS[s]
@@ -72,4 +82,4 @@ until nodes.empty? do
   end
 end
 
-p n[:mana_spent]
+p lowest_mana_spent
