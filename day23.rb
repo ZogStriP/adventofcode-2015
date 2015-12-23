@@ -6,27 +6,24 @@ counter = 0
 registers["a"] = 1
 
 while (0...instructions.size) === counter
+  offset = 1
   case i = instructions[counter]
-    when /hlf/ then
-      registers[i[/hlf (\w)/, 1]] /= 2
-      counter += 1
-    when /tpl/ then
-      registers[i[/tpl (\w)/, 1]] *= 3
-      counter += 1
-    when /inc/ then
-      registers[i[/inc (\w)/, 1]] += 1
-      counter += 1
-    when /jmp/ then
-      counter += i[/jmp (.+)/, 1].to_i
-    when /jie/ then
-      register, offset = i.scan(/jie (\w), (.+)/).flatten
-      offset = registers[register].even? ? offset.to_i : 1
-      counter += offset
-    when /jio/ then
-      register, offset = i.scan(/jio (\w), (.+)/).flatten
-      offset = registers[register] == 1 ? offset.to_i : 1
-      counter += offset
+  when /hlf/ then
+    registers[i[/hlf (\w)/, 1]] /= 2
+  when /tpl/ then
+    registers[i[/tpl (\w)/, 1]] *= 3
+  when /inc/ then
+    registers[i[/inc (\w)/, 1]] += 1
+  when /jmp/ then
+    offset = i[/jmp (.+)/, 1].to_i
+  when /jie/ then
+    r, o = i.scan(/jie (\w), (.+)/).flatten
+    offset = o.to_i if registers[r].even?
+  when /jio/ then
+    r, o = i.scan(/jio (\w), (.+)/).flatten
+    offset = o.to_i if registers[r] == 1
   end
+  counter += offset
 end
 
 p registers["b"]
