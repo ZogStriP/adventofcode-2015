@@ -14,7 +14,7 @@ keypad = [
   ["X", "X", "D", "X", "X"],
 ]
 
-position = [1, 2]
+position = [2, 0]
 
 max = keypad[0].size - 1
 
