@@ -5,8 +5,7 @@ position = [0, 0]
 visited = { position => true }
 found = false
 
-instructions = File.read("day01.input").strip
-instructions.split(", ").each do |instruction|
+File.read("day01.input").split(", ").each do |instruction|
   face = (face + (instruction[0]["R"] ? 1 : -1)) % 4
   instruction[1..-1].to_i.times do
     position = [position, directions[face]].transpose.map { |a| a.reduce(:+) }

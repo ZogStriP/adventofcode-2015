@@ -1,11 +1,13 @@
+# Part 1
+# position = [1, 1]
 # keypad = [
 #   ["1", "2", "3"],
 #   ["4", "5", "6"],
 #   ["7", "8", "9"],
 # ]
 
-# position = [1, 1]
-
+# Part 2
+position = [2, 0]
 keypad = [
   [nil, nil, "1", nil, nil],
   [nil, "2", "3", "4", nil],
@@ -13,8 +15,6 @@ keypad = [
   [nil, "A", "B", "C", nil],
   [nil, nil, "D", nil, nil],
 ]
-
-position = [2, 0]
 
 max = keypad[0].size - 1
 
@@ -25,8 +25,7 @@ directions = {
   "R" => [0, 1],
 }
 
-instructions = File.read("day02.input").strip
-instructions.split("\n").each do |line|
+File.read("day02.input").split.each do |line|
   line.chars do |d|
     new_position = [
       [0, [max, position[0] + directions[d][0]].min].max,
