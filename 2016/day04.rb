@@ -2,7 +2,7 @@ rooms = File.readlines("day04.input")
             .map { |l| [l[/[^\d]+/].tr("-", ""), l[/\d+/].to_i, l[/\[([a-z]+)\]$/, 1]] }
 
 # Part 1
-p rooms.select { |r| r[2] == r[0].chars.group_by { |c| c }.sort_by { |k, v| [-v.size, k] }.map { |k, v| k }.take(5).join }
+p rooms.select { |r| r[2] == r[0].chars.group_by { |c| c }.sort_by { |k, v| [-v.size, k] }.map(&:first).join[0..4] }
        .map { |r| r[1] }
        .reduce(:+)
 
