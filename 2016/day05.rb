@@ -4,7 +4,7 @@ h = nil
 index = 0
 door_id = "reyedfim"
 
-part_2 = Array.new(8)
+part_2 = [nil] * 8
 
 while part_2.any?(&:nil?) do
   until (h = Digest::MD5.hexdigest("#{door_id}#{index += 1}"))[/^0{5}/] do; end
