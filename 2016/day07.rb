@@ -6,7 +6,7 @@ parts = File.readlines("day07.input")
 
 # Part 1
 p parts.count { |supernet, hypernet|
-  supernet.scan(ABBA).any? { |a, b| a != b } && hypernet.scan(ABBA).none? { |a, b| a != b }
+  !supernet.scan(ABBA).empty? && hypernet.scan(ABBA).empty?
 }
 
 # Part 2
