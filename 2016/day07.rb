@@ -5,9 +5,7 @@ parts = File.readlines("day07.input")
             .map { |line| [line.gsub(BRACKETS, "-"), line.scan(BRACKETS).join("-")] }
 
 # Part 1
-p parts.count { |supernet, hypernet|
-  !supernet.scan(ABBA).empty? && hypernet.scan(ABBA).empty?
-}
+p parts.count { |supernet, hypernet| supernet[ABBA] && !hypernet[ABBA] }
 
 # Part 2
 p parts.count { |supernet, hypernet|
