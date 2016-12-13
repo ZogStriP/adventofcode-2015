@@ -6,14 +6,10 @@ def run(registers)
   while i < @instructions.size
     w = @instructions[i].split
     case w[0]
-    when "cpy"
-      registers[w[2]] = w[1][/[a-d]/] ? registers[w[1]] : w[1].to_i
-    when "inc"
-      registers[w[1]] += 1
-    when "dec"
-      registers[w[1]] -= 1
-    when "jnz"
-      i += w[2].to_i - 1 if (w[1][/[a-d]/] ? registers[w[1]] : w[1].to_i) != 0
+    when "cpy" then registers[w[2]] = registers[w[1]] || w[1].to_i
+    when "inc" then registers[w[1]] += 1
+    when "dec" then registers[w[1]] -= 1
+    when "jnz" then i += w[2].to_i - 1 if (registers[w[1]] || w[1].to_i) != 0
     end
     i += 1
   end
