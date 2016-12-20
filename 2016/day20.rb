@@ -8,7 +8,7 @@ File.readlines("day20.input")
     first ||= max
     total += low - max
   end
-  max = high + 1 if max <= high
+  max = [high + 1, max].max
 }
 
 total += 2 ** 32 - max
