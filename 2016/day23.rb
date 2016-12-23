@@ -32,7 +32,6 @@ def run(registers)
     when "cpy" then registers[w[2]] = registers[w[1]] || w[1].to_i if registers[w[2]]
     when "inc" then registers[w[1]] += 1 if registers[w[1]]
     when "dec" then registers[w[1]] -= 1 if registers[w[1]]
-    when "add" then registers[w[1]] += (registers[w[2]] || w[2].to_i) if registers[w[1]]
     when "adm" then registers[w[1]] += (registers[w[2]] || w[2].to_i) * (registers[w[3]] || w[3].to_i) if registers[w[1]]
     when "jnz" then i += (registers[w[2]] || w[2].to_i) - 1 if (registers[w[1]] || w[1].to_i) != 0
     when "tgl" then
@@ -51,5 +50,4 @@ def run(registers)
   registers
 end
 
-p run("a" => 7, "b" => 0, "c" => 0, "d" => 0)
-p run("a" => 12, "b" => 0, "c" => 0, "d" => 0)
+[7, 12].each { |a| p run("a" => a, "b" => 0, "c" => 0, "d" => 0)["a"] }
