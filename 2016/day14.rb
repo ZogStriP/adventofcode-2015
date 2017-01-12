@@ -5,12 +5,8 @@ SALT = "ngcjuoqr"
 @hashes = {}
 
 def hash(index)
-  key = "#{SALT}#{index}"
-  @hashes[key] ||= begin
-    h = Digest::MD5.hexdigest(key)
-    2016.times { h = Digest::MD5.hexdigest(h) }
-    h
-  end
+  h = "#{SALT}#{index}"
+  @hashes[h] ||= (1..2017).inject(h) { |h| Digest::MD5.hexdigest(h) }
 end
 
 index = 0
