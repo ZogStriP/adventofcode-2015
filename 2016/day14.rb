@@ -17,13 +17,10 @@ index = 0
 keys = []
 
 while keys.size < 64 do
-  if c = hash(index)[/(\h)\1{2}/, 1]
-    [*1..1000].each do |i|
-      if hash(index + i)[c * 5]
-        keys << index
-        break
-      end
-    end
+  if c = hash(index)[/(\h)\1\1/, 1]
+    (1..1000).each { |i|
+      (keys << index; break) if hash(index + i)[c * 5]
+    }
   end
   index += 1
 end
