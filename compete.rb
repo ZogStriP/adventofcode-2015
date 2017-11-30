@@ -2,9 +2,11 @@
 
 fail "Missing or incorrect 'AOC_SESSION' env variable" if ENV["AOC_SESSION"]&.size != 96
 
-now = Time.now.utc
+require "tzinfo"
 
-fail "It's not that time of the year yet" if now.month != 12 || !now.day.between?(1, 25)
+now = TZInfo::Timezone.get("EST").now
+
+fail "It's not that time of the year yet" unless now.month == 12 && (1..25) === now.day
 
 require "fileutils"
 
