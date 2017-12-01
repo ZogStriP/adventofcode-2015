@@ -12,14 +12,28 @@ require "fileutils"
 
 FileUtils.mkdir_p now.year.to_s
 
-filename = "%d/%02d" % [now.year, now.day]
+filename = "%d/%02d.rb" % [now.year, now.day]
 
-puts "Downloading input to '#{filename}.input'..."
+if File.exists?(filename)
+  print "Do you want to overwrite '#{filename}'? [Y/n] "
+  exit if gets()[/n/i]
+end
 
-`curl -sS -H 'Cookie: session=#{ENV["AOC_SESSION"]}' 'https://adventofcode.com/#{now.year}/day/#{now.day}/input' -o '#{filename}.input'`
+puts "Downloading input..."
 
-puts "Creating '#{filename}.rb'..."
+input = `curl -sS -H 'Cookie: session=#{ENV["AOC_SESSION"]}' 'http://adventofcode.com/#{now.year}/day/#{now.day}/input'`
 
-`touch #{filename}.rb`
+puts "Creating '#{filename}'..."
+
+code = <<~CODE
+input = (ARGV.empty? ? DATA.read.strip : ARGV[0])
+
+# TODO
+
+__END__
+#{input.strip}
+CODE
+
+IO.write(filename, code)
 
 puts "Done!"
