@@ -1,7 +1,7 @@
 input = (ARGV.empty? ? DATA.read.strip : ARGV[0]).chars.map(&:to_i)
 
 def solve(input, n)
-  input.select.with_index { |c, i| c == input[(i + n) % input.size] }.sum
+  input.zip(input.rotate(n)).sum { |a, b| a == b ? a : 0 }
 end
 
 p [1, input.size / 2].map { |n| solve(input, n) }
