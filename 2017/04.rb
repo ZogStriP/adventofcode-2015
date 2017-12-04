@@ -1,7 +1,6 @@
 input = (ARGV.empty? ? DATA.read.strip : ARGV[0]).split("\n").map(&:split)
 
-p input.count { |words| words == words.uniq }
-p input.count { |words| words.size == words.map { |w| w.chars.sort }.uniq.size }
+[input, input.map { |l| l.map { |w| w.chars.sort } }].each { |l| p l.count { |w| w == w.uniq } }
 
 __END__
 kvvfl kvvfl olud wjqsqa olud frc
