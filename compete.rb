@@ -5,14 +5,15 @@ fail "Missing or incorrect 'AOC_SESSION' env variable" if ENV["AOC_SESSION"]&.si
 require "tzinfo"
 
 now = TZInfo::Timezone.get("EST").now
+day = ARGV.size > 0 ? ARGV[0].to_i : now.day
 
-fail "It's not that time of the year yet" unless now.month == 12 && (1..25) === now.day
+fail "It's not that time of the year yet" unless now.month == 12 && (1..25) === day
 
 require "fileutils"
 
 FileUtils.mkdir_p now.year.to_s
 
-filename = "%d/%02d.rb" % [now.year, now.day]
+filename = "%d/%02d.rb" % [now.year, day]
 
 if File.exists?(filename)
   print "Do you want to overwrite '#{filename}'? [Y/n] "
@@ -21,7 +22,7 @@ end
 
 puts "Downloading input..."
 
-input = `curl -sS -H 'Cookie: session=#{ENV["AOC_SESSION"]}' 'http://adventofcode.com/#{now.year}/day/#{now.day}/input'`
+input = `curl -sS -H 'Cookie: session=#{ENV["AOC_SESSION"]}' 'http://adventofcode.com/#{now.year}/day/#{day}/input'`
 
 puts "Creating '#{filename}'..."
 
