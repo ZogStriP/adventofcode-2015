@@ -15,7 +15,11 @@ end
 
 puts "Retrieving problem name..."
 
-name = get("/#{now.year}/day/#{day}")[/<h2>--- Day \d+: (.+) ---<\/h2>/, 1].gsub(/\s+/, "_").downcase
+name = get("/#{now.year}/day/#{day}")[/<h2>--- Day \d+: (.+) ---<\/h2>/, 1]
+        .gsub(/\s+/, "_")
+        .gsub(/_{2,}/, "_")
+        .gsub(/^_+|_+$/, "")
+        .downcase
 
 require "fileutils"
 
