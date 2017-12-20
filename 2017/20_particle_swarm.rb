@@ -1,8 +1,12 @@
 particles = DATA.readlines.map { |l| l.scan(/-?\d+/).map(&:to_i).each_slice(3).to_a }
 
-p particles.each_with_index.min_by { |(p, v, a), _| [a, v, p].map { |x| x.sum(&:abs) } }[1]
+T = 1000
 
-1000.times {
+p particles.each_with_index.min_by { |(pp, vv, aa), _|
+  pp.zip(vv, aa).sum { |p, v, a| (p + v * T + a * T * (T + 1) / 2).abs }
+}[1]
+
+T.times {
   particles.each { |p, v, a| 3.times { |i| p[i] += (v[i] += a[i]) } }
   particles = particles.group_by(&:first).select { |_, p| p.size == 1 }.values.flatten(1)
 }
