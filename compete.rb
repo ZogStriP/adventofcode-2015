@@ -10,7 +10,7 @@ day = ARGV.size > 0 ? ARGV[0].to_i : now.day
 fail "It's not that time of the year yet" unless now.month == 12 && (1..25) === day
 
 def get(path)
-  `curl -sS -H 'Cookie: session=#{ENV["AOC_SESSION"]}' 'http://adventofcode.com#{path}'`
+  `curl -sS -H 'Cookie: session=#{ENV["AOC_SESSION"]}' 'https://adventofcode.com#{path}'`
 end
 
 puts "Retrieving problem name..."
