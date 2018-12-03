@@ -39,7 +39,7 @@ input = get("/#{now.year}/day/#{day}/input")
 puts "Creating '#{filename}'..."
 
 code = <<~CODE
-input = (ARGV.empty? ? DATA.read.strip : ARGV[0])
+input = DATA.read.each_line
 
 # TODO
 

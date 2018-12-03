@@ -1,6 +1,6 @@
 require "set"
 
-input = DATA.read.strip.split("\n")
+input = DATA.read.each_line
 
 counts = input.map { |i| i.each_char.with_object(Hash.new(0)) { |c, h| h[c] += 1 }.values }
 p counts.count { |c| c.include?(2) } * counts.count { |c| c.include?(3) }

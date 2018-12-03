@@ -1,6 +1,6 @@
 require "set"
 
-input = DATA.read.strip.split("\n").map(&:to_i)
+input = DATA.read.each_line.map(&:to_i)
 
 p input.sum
 
