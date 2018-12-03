@@ -1,23 +1,23 @@
 input = DATA.read.each_line.map { |l| l.scan(/\d+/).map(&:to_i) }
 
-fabric = Hash.new(0)
+fabric = Array.new(1000) { Array.new(1000, 0) }
 
 input.each { |_, l, t, w, h|
   w.times { |a|
     h.times { |b|
-      fabric["#{l + a}x#{t + b}"] += 1
+      fabric[l + a][t + b] += 1
     }
   }
 }
 
-p fabric.values.count { |v| v > 1 }
+p fabric.flatten.count { |v| v > 1 }
 
 p input.find { |_, l, t, w, h|
   overlapped = false
 
   w.times { |a|
     h.times { |b|
-      overlapped ||= fabric["#{l + a}x#{t + b}"] > 1
+      overlapped ||= fabric[l + a][t + b] > 1
     }
   }
 
