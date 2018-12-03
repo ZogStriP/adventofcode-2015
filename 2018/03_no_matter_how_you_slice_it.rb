@@ -13,15 +13,11 @@ input.each { |_, l, t, w, h|
 p fabric.flatten.count { |v| v > 1 }
 
 p input.find { |_, l, t, w, h|
-  overlapped = false
-
-  w.times { |a|
-    h.times { |b|
-      overlapped ||= fabric[l + a][t + b] > 1
+  w.times.all? { |a|
+    h.times.all? { |b|
+      fabric[l + a][t + b] == 1
     }
   }
-
-  !overlapped
 }[0]
 
 __END__
