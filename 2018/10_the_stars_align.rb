@@ -2,14 +2,14 @@ pv = DATA.each_line.map { |l| l.scan(/-?\d+/).map(&:to_i) }
 
 all_positive = 1.step.find { |s| pv.all? { |x, y, xx, yy| (x + xx * s) > 0 && (y + yy * s) > 0 } }
 
-best_range  = Float::INFINITY
+best_height  = Float::INFINITY
 best_points = nil
 
 p all_positive.step { |s|
   points = pv.map { |x, y, xx, yy| [x + xx * s, y + yy * s] }
-  range = points.map(&:last).minmax.reduce(:-).abs
-  break s - 1 if range > best_range
-  best_range = range
+  height = points.map(&:last).minmax.reduce(:-).abs
+  break s - 1 if height > best_height
+  best_height = height
   best_points = points
 }
 
