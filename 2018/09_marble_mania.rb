@@ -1,24 +1,17 @@
-Marble = Struct.new(:value, :left, :right)
-
 def play(players, marbles)
-  scores = [0] * players
-  current = Marble.new(0)
-  current.left = current
-  current.right = current
+  scores   = [0] * players
+  nexts    = [nil] * (marbles + 1)
+  nexts[0] = current = 0
 
   (1..marbles).each { |m|
     if m % 23 == 0
-      7.times { current = current.left }
-      scores[m % players] += m + current.value
-      current.left.right = current.right
-      current = current.right
+      n = nexts[m - 5]
+      scores[m % players] += m + n
+      current = nexts[m - 5] = nexts[n]
     else
-      l = current.right
-      r = l.right
-      marble = Marble.new(m, l, r)
-      l.right = marble
-      r.left = marble
-      current = marble
+      nexts[m] = nexts[nexts[current]]
+      nexts[nexts[current]] = m
+      current = m
     end
   }
 
