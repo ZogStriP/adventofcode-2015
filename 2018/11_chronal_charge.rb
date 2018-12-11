@@ -11,24 +11,22 @@ SERIAL = 6042
   }
 }
 
-def find_best_square(min_size, max_size = min_size)
+best_squares = (1..SIZE).map { |s|
   best_power = 0
   best_square = nil
 
-  (min_size..max_size).each { |s|
-    (s...SIZE).each { |x|
-      (s...SIZE).each { |y|
-        power = @grid[x][y] + @grid[x - s][y - s] - @grid[x - s][y] - @grid[x][y - s]
-        if power > best_power
-          best_power = power
-          best_square = [x - s + 1, y - s + 1, s]
-        end
-      }
+  (s...SIZE).each { |x|
+    (s...SIZE).each { |y|
+      power = @grid[x][y] + @grid[x - s][y - s] - @grid[x - s][y] - @grid[x][y - s]
+      if power > best_power
+        best_power = power
+        best_square = [x - s + 1, y - s + 1, s]
+      end
     }
   }
 
-  best_square
-end
+  [best_power, best_square]
+}
 
-p find_best_square(3)[0, 2]
-p find_best_square(1, SIZE)
+p best_squares[2]
+p best_squares.max_by(&:first)
