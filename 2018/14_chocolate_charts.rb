@@ -1,31 +1,20 @@
-INPUT = 760221
+INPUT = "760221"
 
-sequence = INPUT.digits.reverse
+scores = [3, 7]
+a, b = 0, 1
 
-scores = [nil] * 16_000_000
-scores[0] = 3
-scores[1] = 7
-
-size = 2
-
-a = 0
-b = 1
-
-scores.size.times {
+16_000_000.times {
   s = scores[a] + scores[b]
-  if s > 9
-    scores[size] = 1; size += 1
-    scores[size] = s - 10; size += 1
-  else
-    scores[size] = s; size += 1
-  end
-  a = (a + scores[a] + 1) % size
-  b = (b + scores[b] + 1) % size
+  s > 9 ? scores << 1 << s - 10 : scores << s
+  a = (a + scores[a] + 1) % scores.size
+  b = (b + scores[b] + 1) % scores.size
 }
 
-puts scores[INPUT, 10].join
+puts scores[INPUT.to_i, 10].join
 
-p INPUT.step { |i|
+sequence = INPUT.chars.map(&:to_i)
+
+p INPUT.to_i.step { |i|
   break i if scores[i] == sequence[0] &&
     scores[i + 1] == sequence[1] &&
     scores[i + 2] == sequence[2] &&
