@@ -39,12 +39,10 @@ input = get("/#{now.year}/day/#{day}/input")
 puts "Creating '#{filename}'..."
 
 code = <<~CODE
-input = DATA.read.each_line
 
-# TODO
 
 __END__
-#{input.strip}
+#{input.chomp}
 CODE
 
 IO.write(filename, code)
