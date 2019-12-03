@@ -20,8 +20,7 @@ DATA.read.each_line.with_index { |line, index|
   }
 }
 
-intersections = (wires[0] & wires[1])
-intersections.delete([0, 0])
+intersections = wires[0] & wires[1]
 
 p intersections.map { |(x, y)| x.abs + y.abs }.min
 p intersections.map { |p| steps.sum { |s| s[p] }}.min
