@@ -16,7 +16,6 @@ def int_code
     m = mode.digits
     a = read(pc + 1, m[0])
     b = read(pc + 2, m[1])
-    c = read(pc + 3, m[2])
 
     case opcode
     when 1
