@@ -100,7 +100,7 @@ xs, ys = grid.keys.transpose
 
 Range.new(*ys.minmax).each { |y|
   puts Range.new(*xs.minmax).map { |x|
-    grid[[x, y]] == 1 ? "#" : " "
+    grid[[x, y]] == 1 ? "█" : " "
   }.join
 }
 
