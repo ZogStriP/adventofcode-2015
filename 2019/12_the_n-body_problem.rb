@@ -11,11 +11,9 @@ start = moons.map(&:first).transpose
 p moons.sum { |p, v| p.sum(&:abs) * v.sum(&:abs) }
 
 def period(a)
-  t = 0
   v = [0] * a.size
 
-  loop {
-    t += 1
+  (1..).each { |t|
     g = a.map { |b| a.sum { |c| c <=> b }}
     v = v.zip(g).map(&:sum)
     a = a.zip(v).map(&:sum)
