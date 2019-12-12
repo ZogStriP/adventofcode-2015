@@ -12,7 +12,7 @@ p moons.sum { |p, v| p.sum(&:abs) * v.sum(&:abs) }
 
 def period(a)
   t = 0
-  v = [0, 0, 0, 0]
+  v = [0] * a.size
 
   loop {
     g = a.map { |b| a.sum { |c| c <=> b }}
