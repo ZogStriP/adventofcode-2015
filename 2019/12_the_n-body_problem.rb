@@ -15,12 +15,10 @@ def period(a)
   v = [0] * a.size
 
   loop {
+    t += 1
     g = a.map { |b| a.sum { |c| c <=> b }}
     v = v.zip(g).map(&:sum)
     a = a.zip(v).map(&:sum)
-
-    t += 1
-
     return t * 2 if v.all?(&:zero?)
   }
 end
