@@ -96,7 +96,7 @@ def play(program, quarters)
 
     if x == -1 && y == 0
       score = tile
-      display(grid)
+      # display(grid)
     else
       grid[[x, y]] = tile
       paddle = x if tile == 3
@@ -107,7 +107,7 @@ def play(program, quarters)
   [grid, score]
 end
 
-p play(program, 1)[0].count { |_, v| v == 2 }
+p play(program, 1)[0].values.count(2)
 p play(program, 2)[1]
 
 __END__
