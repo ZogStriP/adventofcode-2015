@@ -21,7 +21,7 @@ def period(a)
   }
 end
 
-p start.map { |a| period(a) }.reduce(1) { |a, b| a.lcm(b) }
+p start.map { |a| period(a) }.reduce(1, :lcm)
 
 __END__
 <x=-4, y=3, z=15>
