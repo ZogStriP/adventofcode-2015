@@ -119,7 +119,7 @@ loop {
   end
 }
 
-p path
+# p path
 
 # manual solve
 M = %w{A B A A B C B C C B}
@@ -131,8 +131,6 @@ V = %w{n}
 input = [M, A, B, C, V].flat_map { |i|
   i.join(?,).chars.map(&:ord) << 10
 }
-
-p input
 
 program[0] = 2
 ascii = IntCode.new(program, input)
