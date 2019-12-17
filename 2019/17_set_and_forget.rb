@@ -95,7 +95,7 @@ grid = map.split("\n").flat_map.with_index { |r, y|
 
 p grid.select { |k, v| v == ?# && DIRS.all? { |n| grid[k + n] == ?# }}.sum { |k, _| k[0] * k[1] }
 
-path = []
+path = ""
 pos, robot = grid.find { |_, v| ROBOTS[v] }
 dir = DIRS[ROBOTS.index(robot)]
 
@@ -119,17 +119,12 @@ loop {
   end
 }
 
-# p path
+a, b, c = /^(.{1,11})\1*(.{1,11})(?:\1|\2)*(.{1,11})(?:\1|\2|\3)*$/.match(path).captures
+m = path.gsub(a, ?A).gsub(b, ?B).gsub(c, ?C)
+v = ?n
 
-# manual solve
-M = %w{A B A A B C B C C B}
-A = %w{L 12 R 8 L 6 R 8 L 6}
-B = %w{R 8 L 12 L 12 R 8}
-C = %w{L 6 R 6 L 12}
-V = %w{n}
-
-input = [M, A, B, C, V].flat_map { |i|
-  i.join(?,).chars.map(&:ord) << 10
+input = [m, a, b, c, v].flat_map { |i|
+  i.scan(/[a-z]|\d+/i).join(?,).chars.map(&:ord) << 10
 }
 
 program[0] = 2
