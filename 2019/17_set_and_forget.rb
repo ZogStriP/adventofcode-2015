@@ -124,7 +124,7 @@ m = path.gsub(a, ?A).gsub(b, ?B).gsub(c, ?C)
 v = ?n
 
 input = [m, a, b, c, v].flat_map { |i|
-  i.scan(/[a-z]|\d+/i).join(?,).chars.map(&:ord) << 10
+  i.scan(/[a-z]|\d+/i).join(?,).bytes << 10
 }
 
 program[0] = 2
