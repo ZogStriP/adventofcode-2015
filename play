@@ -2,6 +2,7 @@
 
 fail "Missing or incorrect 'AOC_SESSION' env variable" if ENV["AOC_SESSION"]&.size != 96
 
+require "cgi"
 require "tzinfo"
 
 now = TZInfo::Timezone.get("EST").now
@@ -16,8 +17,10 @@ end
 
 puts "Retrieving problem name..."
 
-name = get("/#{year}/day/#{day}")[/<h2>--- Day \d+: (.+) ---<\/h2>/, 1]
-        .gsub(/\s+/, "_")
+html_name = get("/#{year}/day/#{day}")[/<h2>--- Day \d+: (.+) ---<\/h2>/, 1]
+
+name = CGI.unescapeHTML(html_name)
+        .gsub(/[^\w-]+/i, "_")
         .gsub(/_{2,}/, "_")
         .gsub(/^_+|_+$/, "")
         .downcase
@@ -28,11 +31,9 @@ FileUtils.mkdir_p year.to_s
 
 filename = "%d/%02d_%s.rb" % [year, day, name]
 
-p filename
-
 if File.exists?(filename)
   print "Do you want to overwrite '#{filename}'? [Y/n] "
-  exit if gets()[/n/i]
+  exit if STDIN.gets[/n/i]
 end
 
 puts "Downloading input..."
