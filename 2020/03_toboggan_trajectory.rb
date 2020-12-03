@@ -1,4 +1,4 @@
-grid = DATA.readlines.map(&:chomp)
+grid = DATA.read.split
 
 trees = -> (x, y) {
   (0...grid.size).step(y).with_index.count { |r, i| grid[r][(i * x) % grid[r].size]["#"] }
