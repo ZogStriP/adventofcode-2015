@@ -1,7 +1,7 @@
 forms = DATA.read.split("\n\n").map { |l| l.split.map(&:chars) }
 
-p forms.sum { |f| f.inject(:|).size }
-p forms.sum { |f| f.inject(:&).size }
+p forms.sum { |f| f.reduce(:|).size }
+p forms.sum { |f| f.reduce(:&).size }
 
 __END__
 rypdeiqkbgacnxwumhtozfjvs

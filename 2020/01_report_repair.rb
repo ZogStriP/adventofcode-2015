@@ -1,7 +1,7 @@
 input = DATA.readlines.map(&:to_i)
 
-p input.combination(2).find { |x| x.sum == 2020 }.inject(:*)
-p input.combination(3).find { |x| x.sum == 2020 }.inject(:*)
+p input.combination(2).find { |x| x.sum == 2020 }.reduce(:*)
+p input.combination(3).find { |x| x.sum == 2020 }.reduce(:*)
 
 __END__
 1440
