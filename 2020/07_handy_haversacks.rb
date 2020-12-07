@@ -5,12 +5,12 @@ DATA.readlines.each { |l|
   contents.scan(/(\d+) (\w+ \w+) bag/) { |n, content| bags[container] << [n.to_i, content] }
 }
 
-_s = {}
-search = -> (bag) { _s[bag] ||= bags[bag].any? { |_, b| b["shiny gold"] || search[b] == :t } ? :t : :f }
+s = {}
+search = -> (bag) { s[bag] ||= bags[bag].any? { |_, b| b["shiny gold"] || search[b] == :t } ? :t : :f }
 p bags.keys.count { |bag| search[bag] == :t }
 
-_w = {}
-weight = -> (bag) { _w[bag] ||= 1 + bags[bag].sum { |n, b| n * weight[b] } }
+w = {}
+weight = -> (bag) { w[bag] ||= 1 + bags[bag].sum { |n, b| n * weight[b] } }
 p weight["shiny gold"] - 1
 
 __END__
