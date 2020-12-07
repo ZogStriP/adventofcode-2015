@@ -6,19 +6,11 @@ DATA.readlines.each { |l|
 }
 
 _s = {}
-
-search = -> (bag) {
-  _s[bag] ||= bags[bag].any? { |_, b| b["shiny gold"] || search[b] == :t } ? :t : :f
-}
-
+search = -> (bag) { _s[bag] ||= bags[bag].any? { |_, b| b["shiny gold"] || search[b] == :t } ? :t : :f }
 p bags.keys.count { |bag| search[bag] == :t }
 
 _w = {}
-
-weight = -> (bag) {
-  _w[bag] ||= 1 + bags[bag].sum { |n, b| n * weight[b] }
-}
-
+weight = -> (bag) { _w[bag] ||= 1 + bags[bag].sum { |n, b| n * weight[b] } }
 p weight["shiny gold"] - 1
 
 __END__
