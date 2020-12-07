@@ -2,7 +2,7 @@ bags = Hash.new { |h, k| h[k] = [] }
 
 DATA.readlines.each { |l|
   container, contents = l.split(" bags contain ")
-  contents.scan(/(\d+) (\w+\s\w+) bag/) { |n, content| bags[container] << [n.to_i, content] }
+  contents.scan(/(\d+) (\w+ \w+) bag/) { |n, content| bags[container] << [n.to_i, content] }
 }
 
 _s = {}
