@@ -10,8 +10,8 @@ search = -> (bag) { s[bag] ||= bags[bag].any? { |_, b| b["shiny gold"] || search
 p bags.keys.count { |bag| search[bag] == :t }
 
 w = {}
-weight = -> (bag) { w[bag] ||= 1 + bags[bag].sum { |n, b| n * weight[b] } }
-p weight["shiny gold"] - 1
+weight = -> (bag) { w[bag] ||= bags[bag].sum { |n, b| n * (1 + weight[b]) } }
+p weight["shiny gold"]
 
 __END__
 dull blue bags contain 2 dotted green bags, 1 dull brown bag, 3 striped tomato bags, 5 muted blue bags.
