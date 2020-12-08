@@ -1,9 +1,6 @@
 require "set"
 
-program = DATA.each_line.map { |l|
-  op, arg = l.split
-  [op, arg.to_i]
-}
+program = DATA.each_line.map { |l| op, arg = l.split; [op, arg.to_i] }
 
 def run(code)
   ip  = 0
@@ -26,7 +23,6 @@ def run(code)
 
   [:done, acc]
 end
-
 
 p run(program)[1]
 
