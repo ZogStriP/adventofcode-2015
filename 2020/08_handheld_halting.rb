@@ -1,6 +1,6 @@
 require "set"
 
-program = DATA.each_line.map { |l| op, arg = l.split; [op, arg.to_i] }
+program = DATA.each_line.map { |l| [l[0..2], l[4..].to_i] }
 
 def run(code)
   ip  = 0
