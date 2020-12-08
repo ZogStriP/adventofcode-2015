@@ -29,8 +29,7 @@ p run(program)[1]
 p program.each_with_index { |(op, arg), i|
   next if op["acc"]
 
-  code = program.dup
-  code[i] = op["nop"] ? ["jmp", arg] : ["nop", arg]
+  code = program[0...i] + [[op["nop"] ? "jmp" : "nop", arg]] + program[i + 1..-1]
 
   result, acc = run(code)
   break acc if result == :done
