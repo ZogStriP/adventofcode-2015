@@ -1,7 +1,7 @@
-ids = DATA.readlines.map { |l| l.tr("FLBR", "0011").to_i(2) }.sort
+ids = DATA.readlines.map { |l| l.tr("FLBR", "0011").to_i(2) }
 
-p ids[-1]
-p ids.each_cons(2).find { |a, b| a + 2 == b }[0] + 1
+min, max = ids.minmax
+p max, *[*min..max] - ids
 
 __END__
 FBBBBBBRRL
