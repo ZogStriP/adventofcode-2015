@@ -1,6 +1,6 @@
 numbers = DATA.readlines.map(&:to_i)
 
-p key = numbers.each_cons(26).find { |n| !n[0, 25].combination(2).map(&:sum).include? n[-1] }[-1]
+p key = numbers.each_cons(26).find { |n| !n[0...].any? { |k| n[0...].include?(n[-1] - k) }}[-1]
 
 l, r = 0, 2
 
