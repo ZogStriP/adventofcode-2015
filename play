@@ -3,9 +3,8 @@
 fail "Missing or incorrect 'AOC_SESSION' env variable" if ENV["AOC_SESSION"]&.size != 96
 
 require "cgi"
-require "tzinfo"
 
-now = TZInfo::Timezone.get("EST").now
+now = Time.now.localtime("-05:00")
 day = ARGV.size > 0 ? ARGV[0].to_i : now.day
 year = ARGV.size > 1 ? ARGV[1].to_i : now.year
 
