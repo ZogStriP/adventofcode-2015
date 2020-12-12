@@ -1,5 +1,3 @@
-require "set"
-
 DIRS = [-1, 0, 1].product([-1, 0, 1]) - [[0, 0]]
 
 grid = DATA.read.split
@@ -36,14 +34,14 @@ visibles = grid.size.times.map { |s|
 }
 
 def run(grid, neighbors, threshold:)
-  occupied = Set.new
+  occupied = {}
   seats = grid.size.times.select { |s| grid[s] != ?. }
 
   loop {
     same = true
     counts = [0] * grid.size
 
-    occupied.each { |s|
+    occupied.each_key { |s|
       neighbors[s].each { |n|
         counts[n] += 1
       }
@@ -52,7 +50,7 @@ def run(grid, neighbors, threshold:)
     seats.each { |s|
       if grid[s] == ?L && counts[s] == 0
         same = false
-        occupied << s
+        occupied[s] = true
         grid[s] = ?#
       elsif grid[s] == ?# && counts[s] >= threshold
         same = false
