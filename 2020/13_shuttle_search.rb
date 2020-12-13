@@ -4,7 +4,7 @@ buses = DATA.readline.split(?,).map.with_index { |b, i| b[?x] ? nil : [b.to_i, i
 p buses.map { |b, _| [-min % b, b] }.min_by(&:first).reduce(:*)
 
 step = 1
-timestamp = 0
+timestamp = 100000000000000
 
 buses.each { |b, i|
   timestamp += step until (timestamp + i) % b == 0
