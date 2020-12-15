@@ -1,7 +1,7 @@
 T = []
 
 init = DATA.read.split(?,).map(&:to_i)
-init.each_with_index { |n, i| T[n] = i + 1 }
+init.each.with_index(1) { |n, i| T[n] = i }
 
 last = 0
 
