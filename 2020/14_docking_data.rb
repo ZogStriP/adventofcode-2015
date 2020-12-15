@@ -1,28 +1,31 @@
 mem1, mem2 = {}, {}
-zeros, ones, floats = 0, 0, []
+zeros, ones, floats = 0, 0, 0
 
 DATA.each_line { |line|
   case line
   when /mask = ([01X]+)/
-    zeros, ones, floats = 0, 0, []
+    zeros, ones, floats = 0, 0, 0
 
     $1.reverse.each_char.with_index { |c, i|
       case c
-      when ?0; zeros |= 1 << i
-      when ?1; ones  |= 1 << i
-      when ?X; floats << i
+      when ?0; zeros  |= 1 << i
+      when ?1; ones   |= 1 << i
+      when ?X; floats |= 1 << i
       end
-    }
-
-    floats = (2**floats.size).times.map { |n|
-      z, o = 0, 0
-      floats.each_with_index { |x, i| n[i] == 0 ? z |= 1 << x : o |= 1 << x }
-      [z, o]
     }
   when /mem\[(\d+)\] = (\d+)/
     addr, val = $1.to_i, $2.to_i
+
     mem1[addr] = (val | ones) & ~zeros
-    floats.each { |z, o| mem2[(addr | ones | o) & ~z] = val }
+
+    o = 0
+    addr = (addr | ones) & ~floats
+
+    loop do
+      mem2[addr | o] = val
+      o = (o + ~floats + 1) & floats
+      break if o == 0
+    end
   end
 }
 
