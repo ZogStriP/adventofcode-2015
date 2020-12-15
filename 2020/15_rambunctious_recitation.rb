@@ -6,10 +6,10 @@ init.each_with_index { |n, i| T[n] = i + 1 }
 last = 0
 
 (init.size + 1...30000000).each { |t|
+  p last if t == 2020
   tt = T[last]
   T[last] = t
   last = tt ? t - tt : 0
-  p last if t == 2019
 }
 
 p last
