@@ -1,5 +1,3 @@
-DIRS = [-1, 0, 1]
-
 ddd, dddd = {}, {}
 
 DATA.each_line.with_index { |l, y|
@@ -9,44 +7,27 @@ DATA.each_line.with_index { |l, y|
   }
 }
 
-def neighbors_3d(x, y, z)
-  DIRS.each { |dx|
-    DIRS.each { |dy|
-      DIRS.each { |dz|
-        next if dx == 0 && dy == 0 && dz == 0
-        yield [x + dx, y + dy, z + dz]
-      }
-    }
-  }
-end
+@diffs = []
 
-def neighbors_4d(x, y, z, a)
-  DIRS.each { |dx|
-    DIRS.each { |dy|
-      DIRS.each { |dz|
-        DIRS.each { |da|
-          next if dx == 0 && dy == 0 && dz == 0 && da == 0
-          yield [x + dx, y + dy, z + dz, a + da]
-        }
-      }
-    }
-  }
+def neighbors(c)
+  @diffs[c.size] ||= [-1, 0, 1].repeated_permutation(c.size).to_a - [[0] * c.size]
+  @diffs[c.size].each { |d| yield c.zip(d).map(&:sum) }
 end
 
 6.times {
-  counts, _ddd = Hash.new(0), {}
-  ddd.each_key { |c| neighbors_3d(*c) { |n| counts[n] += 1 } }
-  counts.each { |c, n| _ddd[c] = true if (ddd[c] && n == 2) || n == 3 }
-  ddd = _ddd
+  counts, _copy = Hash.new(0), {}
+  ddd.each_key { |c| neighbors(c) { |n| counts[n] += 1 } }
+  counts.each { |c, n| _copy[c] = true if (ddd[c] && n == 2) || n == 3 }
+  ddd = _copy
 }
 
 p ddd.size
 
 6.times {
-  counts, _dddd = Hash.new(0), {}
-  dddd.each_key { |c| neighbors_4d(*c) { |n| counts[n] += 1 } }
-  counts.each { |c, n| _dddd[c] = true if (dddd[c] && n == 2) || n == 3 }
-  dddd = _dddd
+  counts, _copy = Hash.new(0), {}
+  dddd.each_key { |c| neighbors(c) { |n| counts[n] += 1 } }
+  counts.each { |c, n| _copy[c] = true if (dddd[c] && n == 2) || n == 3 }
+  dddd = _copy
 }
 
 p dddd.size
