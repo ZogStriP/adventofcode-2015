@@ -6,19 +6,13 @@ DATA.each_line.with_index { |l, y|
   }
 }
 
-@diffs = []
-
-def neighbors(c)
-  @diffs[c.size] ||= [-1, 0, 1].repeated_permutation(c.size).to_a - [[0] * c.size]
-  @diffs[c.size].each { |d| yield c.zip(d).map(&:sum) }
-end
-
-[3, 4].each { |d|
-  space = init.transform_keys { |c| c + [0] * (d - 2) }
+[3, 4].each { |dim|
+  space = init.transform_keys { |c| c + [0] * (dim - 2) }
+  diffs = [-1, 0, 1].repeated_permutation(dim).to_a - [[0] * dim]
 
   6.times {
     counts, _copy = Hash.new(0), {}
-    space.each_key { |c| neighbors(c) { |n| counts[n] += 1 } }
+    space.each_key { |c| diffs.each { |d| counts[c.zip(d).map(&:sum)] += 1 } }
     counts.each { |c, n| _copy[c] = true if (space[c] && n == 2) || n == 3 }
     space = _copy
   }
