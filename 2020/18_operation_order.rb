@@ -1,11 +1,11 @@
 class Integer
   alias :/ :+
-  alias :** :+
+  alias :- :*
 end
 
 lines = DATA.read.split(?\n)
 p lines.sum { |l| eval l.tr(?+, ?/) }
-p lines.sum { |l| eval l.gsub(?+, "**") }
+p lines.sum { |l| eval l.tr('+*', '/-') }
 
 __END__
 6 * 6 * (9 + 4) + (8 * 7)
