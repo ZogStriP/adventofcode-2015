@@ -12,7 +12,7 @@ rule = -> (id) {
   _rule[id] ||= String === rules[id] ? rules[id] : "(?:#{rules[id].map { _1.map { |r| rule[r] }.join }.join(?|) })"
 }
 
-rule_0 = Regexp.new ?^ + rule[0] + ?$
+rule_0 = /^#{rule[0]}$/
 p messages.count { _1[rule_0] }
 
 _rule = {
@@ -20,7 +20,7 @@ _rule = {
   11 => "(#{rule[42]}(?:\\g<1>)*#{rule[31]})",
 }
 
-rule_0 = Regexp.new ?^ + rule[0] + ?$
+rule_0 = /^#{rule[0]}$/
 p messages.count { _1[rule_0] }
 
 __END__
