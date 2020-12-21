@@ -25,9 +25,9 @@ rules = foods.flat_map { |ingredients, allergens|
 
 allergens = *foods.map(&:last).reduce(:|)
 
-puts [*ingredients - safe].permutation(allergens.size).find { |ingredient|
-  m = allergens.zip(ingredient).to_h
-  break m if rules.all? { |allergen, ingredients| ingredients === m[allergen] }
+puts [*ingredients - safe].permutation(allergens.size).find { |ingredients|
+  m = allergens.zip(ingredients).to_h
+  break m if rules.all? { |allergen, ings| ings === m[allergen] }
 }.sort_by(&:first).map(&:last).join(?,)
 
 __END__
