@@ -5,30 +5,19 @@ foods = DATA.read.split(?\n).map { |line|
   [$1.split, $2.split(", ")].map(&:to_set)
 }
 
-unsafe = {}
-foods.each { |ingredients, allergens|
-  allergens.each { |allergen|
-    unsafe[allergen] = (unsafe[allergen] || ingredients) & ingredients
-  }
-}
-
 ingredients = foods.map(&:first).reduce(:|)
-safe = ingredients - unsafe.values.reduce(:|)
+allergens   = foods.map(&:last).reduce(:|)
+unsafe      = allergens.to_h { |a| [a, foods.select { _1[1] === a }.map(&:first).reduce(:&)] }
+safe        = ingredients - unsafe.values.reduce(:|)
 
 p foods.sum { (_1[0] & safe).size }
 
-foods.map! { |ingredients, allergens| [ingredients - safe, allergens] }
+while unsafe.any? { _2.size > 1 }
+  known = unsafe.values.select { _1.size == 1 }.reduce(:|)
+  unsafe.transform_values! { _1.size > 1 ? _1 - known : _1 }
+end
 
-rules = foods.flat_map { |ingredients, allergens|
-  allergens.map { |allergen| [allergen, ingredients] }
-}
-
-allergens = *foods.map(&:last).reduce(:|)
-
-puts [*ingredients - safe].permutation(allergens.size).find { |ingredients|
-  m = allergens.zip(ingredients).to_h
-  break m if rules.all? { |allergen, ings| ings === m[allergen] }
-}.sort_by(&:first).map(&:last).join(?,)
+puts unsafe.sort_by(&:first).map { _2.first }.join(?,)
 
 __END__
 nmjbg vvqj kndxsc ndhcb lvxgx mcmphgh pvjd csbpcjf gvzmlh shkr zgjzs nmrsgx bfvqkskq gjsmct dvbtn mjmqst thnqpr mdjh ngzpst fxrrz dgs pqnhxp pbnhgjb zlxj cvck skvh srbmm bsqq zvlpg qpsx dbznsv xxscc gbfsk dzrhrp ddp pgqct mgb pvvvd tzbsgz gxgzc tqs cgmz hskcfs tvdgh fgrtd mxxmt dllbjr vpck jhcjmm jvrgp kzpn trnnvn ktlzpb gbcjqbm vhgtl mpbb mffxl xvlhsr gzxnc hkgx cdqjnm bhmfd pmv xbczcq vtxth bzlfb (contains shellfish, peanuts)
