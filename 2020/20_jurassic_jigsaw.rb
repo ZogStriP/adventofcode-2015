@@ -128,11 +128,9 @@ Y = img.size - MONSTER.map(&:first).max
 X = img[0].size - MONSTER.map(&:last).max
 
 p transformations(img).each { |img|
-  monsters = 0
-
-  Y.times { |y|
-    X.times { |x|
-      monsters += 1 if MONSTER.all? { |yy, xx| img[y + yy][x + xx][?#] }
+  monsters = Y.times.sum { |y|
+    X.times.count { |x|
+      MONSTER.all? { |yy, xx| img[y + yy][x + xx][?#] }
     }
   }
 
